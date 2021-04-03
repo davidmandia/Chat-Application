@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsToMany(models.Chat, { through: 'ChatUser', foreignKey: 'userId'})
+      this.hasMany(models.ChatUser, { foreignKey: 'userId'})
     }
   };
   User.init({
@@ -32,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
           return `${url}/${this.getDataValue('gender')}.svg`
 
         }
+
+        const id = this.getDataValue('id')
+
+        return `${url}/user/${id}/${avatar}`
       }
     }
   }, {
